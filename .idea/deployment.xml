@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="jackbin_xfz">
+    <serverData>
+      <paths name="jackbin_xfz">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/ubuntu/xfz" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/front/node_modules" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

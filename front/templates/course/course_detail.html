@@ -1,0 +1,169 @@
+
+
+{% extends 'base/front_base.html'%}
+
+{% block title %}
+    课程详情
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/course/course_detail.min.css' %}">
+    <script src="{% static 'videojs/video.min.js' %}"></script>
+    <script src="{% static 'videojs/videojs-contrib-hls.min.js' %}"></script>
+    <script src="{% static 'videojs/videojs-contrib-quality-levels.min.js' %}"></script>
+    <script type="text/javascript" src="https://cdn.bdstatic.com/jwplayer/latest/cyberplayer.js"></script>
+    <script src="{% static 'js/course_detail.min.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+        <div class="course-nav">
+            <div class="course-container">
+                <h3 class="title">在线课堂</h3>
+                <ul class="nav-list">
+                    <li class="active"><a href="#">最新课堂</a></li>
+                    <li><a href="#">投资人说</a></li>
+                    <li><a href="#">明星案例</a></li>
+                    <li><a href="#">创业课堂</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="course-wrapper">
+                <div class="course-info">
+                    <p class="course-title">{{ course.title }}</p>
+                    <div class="price-group">
+                        <div class="share-group">
+                            <span class="title">分享至：</span>
+                            <a href="#" class="weixin share-item"></a>
+                            <a href="#" class="weibo share-item"></a>
+                        </div>
+                        <div class="buy-group">
+                            {% if course.price > 0 %}
+                                <span class="price pay">￥{{ course.price }}</span>
+                                <a href="{% url 'course:course_order' course_id=course.pk%}" class="buy-btn">立即购买</a>
+                            {% else %}
+                                <span class="price free">免费</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="video-group">
+                <span id="video-info" hidden data-video-url="{{ course.video_url }}" data-cover-url="{{ course.cover_url }}"></span>
+                <div id="playercontainer">
+
+                </div>
+            </div>
+            <div class="bottom-wrapper">
+                <div class="course-detail-wrapper">
+                    <div class="item-group">
+                        <p class="item-title">课程讲师</p>
+                        <div class="teacher-group">
+                            <div class="atatar-group">
+                                <img src="{{ course.teacher.avatar }}" alt="">
+                            </div>
+                            <div class="teacher-info">
+                                <p class="teacher-name">{{ course.teacher.username }}</p>
+                                <p class="teacher-desc">{{ course.teacher.jobtitle }}</p>
+                            </div>
+                        </div>
+                        <p class="item-content">
+                            {{ course.profile|safe }}
+                        </p>
+                    </div>
+                    <div class="item-group">
+                        <p class="item-title">课程简介</p>
+                        <p class="item-content">
+                            {{ course.profile|safe }}
+                        </p>
+                    </div>
+                    <div class="item-group">
+                        <p class="item-title">课程讲师</p>
+                        <div class="teacher-group">
+                            <div class="atatar-group">
+                                <img src="https://static-image.xfz.cn/1508120374_220.jpg" alt="">
+                            </div>
+                            <div class="teacher-info">
+                                <p class="teacher-name">乔继英</p>
+                                <p class="teacher-desc">专业投资人；一线基金董事总经理</p>
+                            </div>
+                        </div>
+                        <p class="item-content">
+                            乔继英，专业投资人，一线基金董事总经理，十五年以上研发、市场销售、投资经验，投资领域覆盖天使投资、中早期风险投资、PE投资、并购、母基金FOF投资等领域。代表案例：华润凤凰（1515.HK）、微芯生物、二毛照护、九鼎美元基金等。个人间接投资摩拜单车、硅谷大数据公司Palantir等。曾在淡马锡祥峰投资、蓝驰创投、启迪创投等工作，世界五百强公司研发、市场销售主管。北京市高精尖产业基金评审组长、知名证券公司专业专家。清华大学本科、医学院博士、校友导师，曾与哈佛大学合作课题；香港中文大学金融MBA、客座讲师。
+                        </p>
+                    </div>
+                    <div class="item-group">
+                        <p class="item-title">课程讲师</p>
+                        <div class="teacher-group">
+                            <div class="atatar-group">
+                                <img src="https://static-image.xfz.cn/1508120374_220.jpg" alt="">
+                            </div>
+                            <div class="teacher-info">
+                                <p class="teacher-name">乔继英</p>
+                                <p class="teacher-desc">专业投资人；一线基金董事总经理</p>
+                            </div>
+                        </div>
+                        <p class="item-content">
+                            乔继英，专业投资人，一线基金董事总经理，十五年以上研发、市场销售、投资经验，投资领域覆盖天使投资、中早期风险投资、PE投资、并购、母基金FOF投资等领域。代表案例：华润凤凰（1515.HK）、微芯生物、二毛照护、九鼎美元基金等。个人间接投资摩拜单车、硅谷大数据公司Palantir等。曾在淡马锡祥峰投资、蓝驰创投、启迪创投等工作，世界五百强公司研发、市场销售主管。北京市高精尖产业基金评审组长、知名证券公司专业专家。清华大学本科、医学院博士、校友导师，曾与哈佛大学合作课题；香港中文大学金融MBA、客座讲师。
+                        </p>
+                    </div>
+                    <div class="item-group">
+                        <p class="item-title">课程讲师</p>
+                        <div class="teacher-group">
+                            <div class="atatar-group">
+                                <img src="https://static-image.xfz.cn/1508120374_220.jpg" alt="">
+                            </div>
+                            <div class="teacher-info">
+                                <p class="teacher-name">乔继英</p>
+                                <p class="teacher-desc">专业投资人；一线基金董事总经理</p>
+                            </div>
+                        </div>
+                        <p class="item-content">
+                            乔继英，专业投资人，一线基金董事总经理，十五年以上研发、市场销售、投资经验，投资领域覆盖天使投资、中早期风险投资、PE投资、并购、母基金FOF投资等领域。代表案例：华润凤凰（1515.HK）、微芯生物、二毛照护、九鼎美元基金等。个人间接投资摩拜单车、硅谷大数据公司Palantir等。曾在淡马锡祥峰投资、蓝驰创投、启迪创投等工作，世界五百强公司研发、市场销售主管。北京市高精尖产业基金评审组长、知名证券公司专业专家。清华大学本科、医学院博士、校友导师，曾与哈佛大学合作课题；香港中文大学金融MBA、客座讲师。
+                        </p>
+                    </div>
+                    <div class="item-group">
+                        <p class="item-title">课程讲师</p>
+                        <div class="teacher-group">
+                            <div class="atatar-group">
+                                <img src="https://static-image.xfz.cn/1508120374_220.jpg" alt="">
+                            </div>
+                            <div class="teacher-info">
+                                <p class="teacher-name">乔继英</p>
+                                <p class="teacher-desc">专业投资人；一线基金董事总经理</p>
+                            </div>
+                        </div>
+                        <p class="item-content">
+                            乔继英，专业投资人，一线基金董事总经理，十五年以上研发、市场销售、投资经验，投资领域覆盖天使投资、中早期风险投资、PE投资、并购、母基金FOF投资等领域。代表案例：华润凤凰（1515.HK）、微芯生物、二毛照护、九鼎美元基金等。个人间接投资摩拜单车、硅谷大数据公司Palantir等。曾在淡马锡祥峰投资、蓝驰创投、启迪创投等工作，世界五百强公司研发、市场销售主管。北京市高精尖产业基金评审组长、知名证券公司专业专家。清华大学本科、医学院博士、校友导师，曾与哈佛大学合作课题；香港中文大学金融MBA、客座讲师。
+                        </p>
+                    </div>
+                </div>
+                <div class="recommend-wrapper">
+                    <p class="recommend-title">推荐课程</p>
+                    <ul class="recommend-group">
+                        <li>
+                            <div class="recommend-info">
+                                <p class="title">创业公司如何做估值</p>
+                                <p class="teacher">邱总CEO</p>
+                            </div>
+                            <div class="thumbnail-group">
+                                <img src="https://static-image.xfz.cn/1554346304_52.png-course.list.small" alt="">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="recommend-info">
+                                <p class="title">创业公司如何做估值</p>
+                                <p class="teacher">邱总CEO</p>
+                            </div>
+                            <div class="thumbnail-group">
+                                <img src="https://static-image.xfz.cn/1554346304_52.png-course.list.small" alt="">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

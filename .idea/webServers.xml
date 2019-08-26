@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e7fe69db-7eaa-493e-8ba2-97e39bb0ae01" name="jackbin_xfz" url="http://49.235.220.81">
+        <fileTransfer host="49.235.220.81" port="22" privateKey="C:\Users\dell\Desktop\id_rsa_2048" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
