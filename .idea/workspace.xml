@@ -53,11 +53,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xfz/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="151" column="50" selection-start-line="151" selection-start-column="50" selection-end-line="151" selection-end-column="50" />
+            <state relative-caret-position="-1350">
+              <caret line="151" column="48" selection-start-line="151" selection-start-column="37" selection-end-line="151" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/ueditor/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="513">
+              <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -107,15 +116,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/front/templates/news/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1242">
-              <caret line="46" column="12" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -130,7 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>signingroup</find>
       <find>sms-captcha-btn</find>
       <find>switch</find>
       <find>user-more-box</find>
@@ -160,6 +159,7 @@
       <find>banner</find>
       <find>edit</find>
       <find>active</find>
+      <find>static</find>
     </findStrings>
     <dirStrings>
       <dir>F:\Django_project\xfzes\xfz\front\dist</dir>
@@ -244,10 +244,10 @@
     <handled-path value="$PROJECT_DIR$/front/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="653" />
-    <option name="y" value="21" />
+    <option name="x" value="42" />
+    <option name="y" value="307" />
     <option name="width" value="1690" />
-    <option name="height" value="1022" />
+    <option name="height" value="1023" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -524,16 +524,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="653" y="21" width="1690" height="1022" extended-state="0" />
+    <frame x="178" y="990" width="1690" height="1023" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32992327" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.08957055" side_tool="true" visible="true" weight="0.30882353" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.08957055" side_tool="true" visible="true" weight="0.29265538" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="File Transfer" order="8" sideWeight="0.8811075" weight="0.22568093" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" weight="0.32992327" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32925472" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.9104294" visible="true" weight="0.30882353" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.9104294" visible="true" weight="0.29265538" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.10011123" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49867022" visible="true" weight="0.33374232" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -596,11 +596,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apps/ueditor/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2268" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/cms/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="601">
@@ -969,8 +964,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/xfz/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="151" column="50" selection-start-line="151" selection-start-column="50" selection-end-line="151" selection-end-column="50" />
+        <state relative-caret-position="-1350">
+          <caret line="151" column="48" selection-start-line="151" selection-start-column="37" selection-end-line="151" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/ueditor/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
         </state>
       </provider>
     </entry>
