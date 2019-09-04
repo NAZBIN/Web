@@ -15,3 +15,9 @@
        Django 2.0：开发框架。
        MySQL 5.7：数据
        nginx+uwsgi部署项目
+
+
+superuser(尽量不要删改数据) :
+    
+    number:18888888888
+    password:admin123    
