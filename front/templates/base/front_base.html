@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf_token" content="{{ csrf_token }}">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/common/auth.min.css' %}">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1329611_vnwcbcu7gh.css">
@@ -23,8 +24,8 @@
             <ul class="nav">
                 <li class="active"><a href="/">创业资讯</a></li>
                 <li><a href="{% url 'course:course_index' %}">创业课堂</a></li>
-                <li><a href="#">付费资讯</a></li>
-                <li><a href="#">搜索</a></li>
+                <li><a href="{% url 'payinfo:index' %}">付费资讯</a></li>
+                <li><a href="/search/">搜索</a></li>
             </ul>
 
             <div class="auth-box">

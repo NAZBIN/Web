@@ -85,7 +85,7 @@
             submitBtn.click(function (event) {
                 event.preventDefault();
                 var goodsname = $("input[name='goodsname']").val();
-                var istype = $("input[name='istype']:checked").val();
+                var istype = $("input[name='istype']:checked").val(); //checked只会去找选中的值
                 var notify_url = $("input[name='notify_url']").val();
                 var orderid = $("input[name='orderid']").val();
                 var price = $("input[name='price']").val();

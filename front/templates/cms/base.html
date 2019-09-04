@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf_token" content="{{ csrf_token }}">
     <title>{% block title %}{% endblock %} | 小饭桌后台管理系统</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -173,6 +174,16 @@
                         <span>发布课程</span>
                     </a>
                 </li>
+                {% if user.is_superuser %}
+                    <li class="header">员工管理</li>
+                    <li>
+                        <a href="{% url 'cms:staffs' %}">
+                            <i class="fa fa-group"></i>
+                            <span>员工管理</span>
+                        </a>
+                    </li>
+                {% endif %}
+
                 <li class="header">LABELS</li>
                 <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
                 <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>

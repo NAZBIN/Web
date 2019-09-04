@@ -15,9 +15,10 @@ def course_index(request):
 
 def course_detail(request,course_id):
     course = Course.objects.get(pk=course_id)
-    #这里最好用try except来捕获异常
+    buyed = CourseOrder.objects.filter(course=course,buyer=request.user,status=2).exists()
     context = {
-        'course':course
+        'course': course,
+        'buyed': buyed
     }
     return render(request,'course/course_detail.html',context=context)
 
@@ -26,6 +27,7 @@ def course_token(request):
     file = request.GET.get('video')
 
     course_id = request.GET.get('course_id')
+    #判断是否购买了课程
     if not CourseOrder.objects.filter(course_id=course_id,buyer=request.user,status=2).exists():
         return restful.paramserror(message='请先购买课程！')
 
@@ -57,8 +59,9 @@ def course_order(request,course_id):
             'price': course.price
         },
         'order': order,
-        # /course/notify_url/
+        # /course/notify_url/ 构建完整的url链接:build_absolute_uri
         'notify_url': request.build_absolute_uri(reverse('course:notify_view')),
+        #执行完成以后返回的url
         'return_url': request.build_absolute_uri(reverse('course:course_detail',kwargs={"course_id":course.pk}))
     }
     return render(request,'course/course_order.html',context=context)
@@ -88,7 +91,7 @@ def course_order_key(request):
     return restful.result(data={"key": key})
 
 
-@csrf_exempt
+@csrf_exempt #关闭csrf保护 因为paysAPI服务器不会发送csrf_token
 def notify_view(request):
     orderid = request.POST.get('orderid')
     print('='*10)

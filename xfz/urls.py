@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path('',views.index,name='index'),
-    path('search/', views.search, name='search'),
+    path('search/',include("haystack.urls")),
     path('cms/',include("apps.cms.urls")),
     path('news/',include("apps.news.urls")),
     path('account/', include("apps.xfzauth.urls")),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('payinfo/',include("apps.payinfo.urls")),
     path('ueditor/',include("apps.ueditor.urls")),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:
     import debug_toolbar

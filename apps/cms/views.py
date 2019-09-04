@@ -13,58 +13,61 @@ from django.utils.timezone import make_aware
 from django.conf import settings
 import qiniu
 from apps.news.serializers import BannerSerializer
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import permission_required
 
 #cms首页
 @staff_member_required(login_url='index')
 def index(request):
     return render(request,'cms/index.html')
 
+@method_decorator(permission_required(perm="news.change_news",login_url='/'),name='dispatch')
 class NewsListView(View):
     def get(self,request):
         # request.GET：获取出来的所有数据，都是字符串类型
-        page = int(request.GET.get('p',1))#拿到page
+        page = int(request.GET.get('p',1))
         start = request.GET.get('start')
         end = request.GET.get('end')
         title = request.GET.get('title')
         # request.GET.get(参数,默认值)
         # 这个默认值是只有这个参数没有传递的时候才会使用
         # 如果传递了，但是是一个空的字符串，那么也不会使用默认值
-        category_id = int(request.GET.get('category',0) or 0) #如果没有category,那让它的默认值为0,0表示所有分类
-                                        #第一个0是当没有传递category的时候才会让它为0
+        category_id = int(request.GET.get('category',0) or 0)
+
         newses = News.objects.select_related('category', 'author')
-        #判断用户是否选择了开始时间和结束时间， 针对性的进行过滤
+
         if start or end:
             if start:
                 start_date = datetime.strptime(start,'%Y/%m/%d')
             else:
-                start_date = datetime(year=2019,month=8,day=1)
+                start_date = datetime(year=2018,month=6,day=1)
             if end:
                 end_date = datetime.strptime(end,'%Y/%m/%d')
             else:
-                end_date = datetime.today()    #make_aware会将指定的时间转换为TIME_ZONE中指定时区的时间
+                end_date = datetime.today()
             newses = newses.filter(pub_time__range=(make_aware(start_date),make_aware(end_date)))
-        #判断标题
+
         if title:
-            newses = newses.filter(title__icontains=title) #icontains大小写不敏感
-        #判断分类
+            newses = newses.filter(title__icontains=title)
+
         if category_id:
             newses = newses.filter(category=category_id)
 
-        paginator = Paginator(newses,2)#类的对象,传入可遍历的对象，和一页当中要显示的数据数量
-        page_obj = paginator.page(page) #返回当前页的Page对象，代表当前这一页
+        paginator = Paginator(newses, 2)
+        page_obj = paginator.page(page)
 
         context_data = self.get_pagination_data(paginator,page_obj)
 
         context = {
             'categories': NewsCategory.objects.all(),
-            'newses': page_obj.object_list,#object_list需要渲染的数据 如果用news的话会把所有新闻数据都渲染出来
+            'newses': page_obj.object_list,
             'page_obj': page_obj,
             'paginator': paginator,
             'start': start,
             'end': end,
             'title': title,
             'category_id': category_id,
-            'url_query': '&'+parse.urlencode({ #url查询的参数
+            'url_query': '&'+parse.urlencode({
                 'start': start or '',
                 'end': end or '',
                 'title': title or '',
@@ -81,7 +84,7 @@ class NewsListView(View):
         return render(request, 'cms/news_list.html', context=context)
 
 
-    def get_pagination_data(self,paginator,page_obj,around_count=2):#around_cout左右两边需要展示的页码
+    def get_pagination_data(self,paginator,page_obj,around_count=2):
         current_page = page_obj.number
         num_pages = paginator.num_pages
 
@@ -110,14 +113,9 @@ class NewsListView(View):
             'right_has_more': right_has_more,
             'num_pages': num_pages
         }
-# def news_list(request):
-#     context = {
-#         'categories':NewsCategory.objects.all(),
-#         'newses':News.objects.select_related('category','author').all()
-#     }
-#     return render(request,'cms/news_list.html',context=context)
 
 
+@method_decorator(permission_required(perm="news.add_news",login_url='/'),name='dispatch')
 class WriteNewsView(View):
     def get(self,request,*args,**kwargs):
         categories = NewsCategory.objects.all()
@@ -138,7 +136,7 @@ class WriteNewsView(View):
             return restful.ok()
         else:
             return restful.paramserror(message=form.get_errors())
-
+@method_decorator(permission_required(perm="news.change_news",login_url='/'),name='dispatch')
 class EditNewsView(View):
     def get(self,request):
         news_id = request.GET.get('news_id')
@@ -165,6 +163,7 @@ class EditNewsView(View):
             return restful.paramserror(message=form.get_errors())
 
 @require_GET
+@permission_required(perm="news.add_newscategory",login_url='/')
 def news_category(request):
     categories = NewsCategory.objects.all()
     context = {
@@ -173,6 +172,7 @@ def news_category(request):
     return render(request,'cms/news_category.html',context=context)
 
 @require_POST
+@permission_required(perm="news.add_newscategory",login_url='/')
 def add_news_category(request):
     name = request.POST.get('name')
     exists = NewsCategory.objects.filter(name=name).exists()
@@ -183,6 +183,7 @@ def add_news_category(request):
         return restful.paramserror(message="该分类已存在!")
 
 @require_POST
+@permission_required(perm="news.change_newscategory",login_url='/')
 def edit_news_category(request):
     #form表单验证数据
     form = EditNewsCategoryForm(request.POST)
@@ -198,6 +199,7 @@ def edit_news_category(request):
         return restful.paramserror(message=form.get_errors())
 
 @require_POST
+@permission_required(perm="news.delete_newscategory",login_url='/')
 def delete_news_category(request):
     pk = request.POST.get('pk')
     try:
@@ -208,6 +210,7 @@ def delete_news_category(request):
 
 
 @require_POST
+@staff_member_required(login_url='index')
 def upload_file(request):
     file = request.FILES.get('file')
     name = file.name
@@ -219,6 +222,7 @@ def upload_file(request):
 
 
 @require_GET
+@staff_member_required(login_url='index')
 def qntoken(request):
     access_key = settings.QINIU_ACCESS_KEY
     secret_key = settings.QINIU_SECRET_KEY
@@ -228,18 +232,20 @@ def qntoken(request):
     token = q.upload_token(bucket) #返回给js代码 与七牛云交互
     return restful.result(data={'token':token})
 
+@permission_required(perm="news.add_banner",login_url='/')
 def banner(request):
     return render(request,'cms/banners.html')
 
 
 
 #前后端分离的方式，前端调用接口，把后端的数据list列表通过js渲染出来
+@permission_required(perm="news.add_banner",login_url='/')
 def banner_list(request):
     banners = Banner.objects.all() #提取所有的轮播图
     serialize = BannerSerializer(banners,many=True)
     return restful.result(data=serialize.data)
 
-
+@permission_required(perm="news.add_banner",login_url='/')
 def add_banner(request):
     #表单验证
     form = AddBannerForm(request.POST)
@@ -254,11 +260,13 @@ def add_banner(request):
         return restful.paramserror(message=form.get_errors())
 
 #删除轮播图
+@permission_required(perm="news.delete_banner",login_url='/')
 def delete_banner(request):
     banner_id = request.POST.get('banner_id')
     Banner.objects.filter(pk=banner_id).delete()
     return restful.ok()
 
+@permission_required(perm="news.change_banner",login_url='/')
 def edit_banner(request):
     form = UpdateBannerForm(request.POST)
     if form.is_valid():
@@ -271,7 +279,9 @@ def edit_banner(request):
     else:
         return restful.paramserror(message=form.get_errors())
 
+
+@permission_required(perm="news.delete_news",login_url='/')
 def delete_news(request):
-    news_id = request.POST.get('news_id');
+    news_id = request.POST.get('news_id')
     News.objects.filter(pk=news_id).delete()
     return restful.ok()

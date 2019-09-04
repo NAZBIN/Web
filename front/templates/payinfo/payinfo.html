@@ -1,5 +1,7 @@
 {% extends 'base/front_base.html'%}
 
+{% load payinfo_filters %}
+
 {% block title %}
     付费资讯
 {% endblock %}
@@ -16,77 +18,36 @@
                     <img src="https://www.xfz.cn/static/build/images/web-shopxfz-banner.jpg" alt="">
                 </div>
                 <ul class="pay-wrapper">
-                    <li class="pay-group">
-                       <div class="pay-thumbnail">
-                           <img src="https://www.xfz.cn/static/build/images/web-bp-pc.png" alt="">
-                       </div>
-                       <div class="pay-info">
-                           <p class="pay-title">
-                               如何写好一份商业计划书
-                           </p>
-                           <p class="pay-desc">
-                               一份好的商业计划书，是创业成功的开始
-                           </p>
-                           <span class="pay-number">￥8.8</span>
-                       </div>
-                   </li>
-                    <li class="pay-group">
-                       <div class="pay-thumbnail">
-                           <img src="https://www.xfz.cn/static/build/images/web-bg-pc.png" alt="">
-                       </div>
-                       <div class="pay-info">
-                           <p class="pay-title">
-                               大数据、AI与企业服务
-                           </p>
-                           <p class="pay-desc">
-                               大数据、AI与企业服务市场的交融将带来什么新的机会？
-                           </p>
-                           <span class="pay-number">￥9.9</span>
-                       </div>
-                   </li>
-                    <li class="pay-group">
-                       <div class="pay-thumbnail">
-                           <img src="https://www.xfz.cn/static/build/images/web-bg-pc.png" alt="">
-                       </div>
-                       <div class="pay-info">
-                           <p class="pay-title">
-                               汽车市场研究
-                           </p>
-                           <p class="pay-desc">
-                               汽车渠道：新车渠道看好“车和家”；二手车渠道关注效率、系统性盈利能力
-                           </p>
-                           <span class="pay-number">￥9.9</span>
-                       </div>
-                   </li>
-                    <li class="pay-group">
-                       <div class="pay-thumbnail">
-                           <img src="https://www.xfz.cn/static/build/images/web-bg-pc.png" alt="">
-                       </div>
-                       <div class="pay-info">
-                           <p class="pay-title">
-                               大数据、AI与企业服务
-                           </p>
-                           <p class="pay-desc">
-                               大数据、AI与企业服务市场的交融将带来什么新的机会？
-                           </p>
-                           <span class="pay-number">￥9.9</span>
-                       </div>
-                   </li>
-                    <li class="pay-group">
-                       <div class="pay-thumbnail">
-                           <img src="https://www.xfz.cn/static/build/images/web-bg-pc.png" alt="">
-                       </div>
-                       <div class="pay-info">
-                           <p class="pay-title">
-                               大数据、AI与企业服务
-                           </p>
-                           <p class="pay-desc">
-                               大数据、AI与企业服务市场的交融将带来什么新的机会？
-                           </p>
-                           <span class="pay-number">￥9.9</span>
-                       </div>
-                   </li>
-
+                    {% for payinfo in payinfos %}
+                        <li class="pay-group">
+                            {% with payinfo|is_buyed:user as buyed %}
+                                {% if buyed %}
+                                    <a href="{% url 'payinfo:download' %}?payinfo_id={{ payinfo.pk }}">
+                                {% else %}
+                                    <a href="{% url 'payinfo:payinfo_order' %}?payinfo_id={{ payinfo.pk }}">
+                                {% endif %}
+                                <div class="pay-thumbnail">
+                                    <img src="https://www.xfz.cn/static/build/images/web-bp-pc.png" alt="">
+                                </div>
+                                <div class="pay-info">
+                                    <p class="pay-title">
+                                        {{ payinfo.title }}
+                                    </p>
+                                    <p class="pay-desc">
+                                        {{ payinfo.profile }}
+                                    </p>
+                                    <span class="pay-number">
+                                        {% if buyed %}
+                                            点击下载
+                                        {% else %}
+                                            ￥{{ payinfo.price }}
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            {% endwith %}
+                            </a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
             {% include 'common/sidebar.html' %}

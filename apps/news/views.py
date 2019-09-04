@@ -5,6 +5,7 @@ from .serializers import NewsSerializers,CommentSerializer
 from django.http import Http404
 from .forms import PublicCommentForm
 from .models import Comment
+from django.db.models import Q
 from apps.xfzauth.decorators import xfz_login_required
 # Create your views here.
 from utils import restful
@@ -67,5 +68,15 @@ def public_comment(request):
         return restful.result(data=data)
     else:
         return restful.paramserror(message=form.get_errors())
+
 def search(request):
-    return render(request,'search/search.html')
+    print('aaaaa')
+    q = request.GET.get('q')  #拿到要查询的关键字q
+    print(q)
+    context = {}
+    if q:  #或操作用Q表达式
+        newses = News.objects.filter(Q(title__icontains=q)|Q(content__icontains=q))
+        context['newses'] = newses
+        print(newses)
+    #根据q关键字在新闻中去取,将查询到的新闻返回
+    return render(request, 'search/search.html', context=context)

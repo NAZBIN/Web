@@ -25,7 +25,7 @@ SECRET_KEY = 'v-m8vqdld#%@myuhatue+8o^hkf!_tc(kuk+k_h&87m*8_*8y@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','49.235.220.81']
 
 
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.ueditor',
     'rest_framework',
     'debug_toolbar',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -94,7 +95,7 @@ DATABASES = {
         'HOST':'127.0.0.1',
         'ROOT':'3306',
         'USER':'root',
-        'PASSWORD':'binbin1999'
+        'PASSWORD':'19990426'
     }
 }
 
@@ -147,6 +148,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'front','dist')
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR,'static_dist')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -215,3 +218,15 @@ DEBUG_TOOLBAR_CONFIG = {
 BAIDU_CLOUD_USER_ID = '1693e6d335914a089fc07e08ae516d03'
 # 点播VOD->全局设置->发布设置->安全设置->UserKey
 BAIDU_CLOUD_USER_KEY = 'aea7c47dada64564'
+#
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # 设置haystack的搜索引擎
+        'ENGINE': 'apps.news.whoosh_cn_backend.WhooshEngine',
+        # 设置索引文件的位置
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+#增删改后自动创建索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
